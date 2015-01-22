@@ -41,15 +41,15 @@ screen.'''
 
 revComp = '' #creates an empty string to store the reverse complement of dnaSeq
 for i in range(len(dnaSeq)): #looks each nucleotide in dnaSeq 
-    if dnaSeq[i] == 'a': #adds timine to the reverse complement of dnaSeq
+    if dnaSeq[i] == 'a': #adds timine to the complement of dnaSeq
         revComp = revComp + 'T'
-    elif dnaSeq[i] == 't': #adds Adenine to the reverse complement of dnaSeq
+    elif dnaSeq[i] == 't': #adds Adenine to the complement of dnaSeq
         revComp = revComp + 'A'
-    elif dnaSeq[i] == 'g': #adds citosine to the reverse complement of dnaSeq
+    elif dnaSeq[i] == 'g': #adds citosine to the complement of dnaSeq
         revComp = revComp + 'C'
-    else: #adds guanine to the reverse complement of dnaSeq
+    else: #adds guanine to the  complement of dnaSeq
         revComp = revComp + 'G'
-        
+revComp = revComp[::-1] #reverse the complement of dnaSeq        
 revComp = revComp.lower() #converts revComp to lowercase.
 
 print(revComp) #prints the reverse complement of dnaSeq to the screen
