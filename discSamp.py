@@ -12,7 +12,8 @@ This exercise is due on Tuesday, Jan 27th.
 
 
 """
-import time #imports the time module to start timing the execution of functions
+import time #imports the time module 
+import random #imports the random module
 
 '''(1) Write a function that multiplies all consecutively decreasing numbers between a maximum and a minimum 
 supplied as arguments. (Like a factorial, but not necessarily going all the way to 1). This calculation 
@@ -88,6 +89,21 @@ print(binProb(102, 100, 0.03))
 arguments. The first is a list of arbitrarily labeled events and the second is a list of probabilities 
 associated with these events. Obviously, these two lists should be the same length.'''
 
+def discSamp(events, probs):
+    '''This function samples a discrete distribution. It takes two arguments, a list of events and a list of
+    probabilities associated to those events.'''
+    if len(events) != len(probs): #check if the lists are the same length
+        print "Error: The lists are not the same length." #gives an error if both lists are not the same length
+    else:
+        event = random.choice(events) #randomly selects an event from the events list
+        index = events.index(event) #looks the index for the selected event
+        eventProb = probs[index] #selects the probability that corresponds to the selected event
+    return "The probability for the event", event, "is:", eventProb
+    
+    
+events_list = ['a', 'b', 'c', 'd']
+probs_list = [0.3, 0.03, 0.5, 0.9]
+print(discSamp(events_list,probs_list))
 """
 ---> Sampling sites from an alignment <---
 
