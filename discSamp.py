@@ -12,6 +12,7 @@ This exercise is due on Tuesday, Jan 27th.
 
 
 """
+from __future__ import division #imports the division module 
 import time #imports the time module 
 import random #imports the random module
 
@@ -114,11 +115,40 @@ supports the monophyly of taxon A and taxon B. The second type supports the mono
 '''
 (6) For an alignment of 400 sites, with 200 sites of type 1 and 200 of type 2, sample a new alignment (a 
 new set of site pattern counts) with replacement from the original using your function from (5). Print out 
-the counts of the two types.
+the counts of the two types.'''
 
-(7) Repeat (6) 100 times and store the results in a list.
+def sampler(events_list, probs_list, size):
+    '''This function runs the discSamp(events, probs) function a 'size' number of times, and prints out the number
+    of occurrences of each event in the new sample.'''
+    count1 = 0 #creates the count for type 1
+    count2 = 0 #creates count for type 2
+    for events in range(size): #defines the number of times the function is going to be called
+        if discSamp(events_list,probs_list)[1] == 'AB': #checks if the function returned
+            count1 = count1 + 1
+        else:
+            count2 = count2 + 1
+    return count1, count2
 
-(8) Of those 100 trials, summarize how often you saw particular proportions of type 1 vs. type 2. 
+
+alignments_list = ['AB', 'AC']
+probability_list = [0.5, 0.5]
+alignmentTest = sampler(alignments_list, probability_list, 400) 
+print 'The number of AB occurrences is:', alignmentTest[0]
+print 'The number of AC occurrences is:', alignmentTest[1]
+
+
+'''(7) Repeat (6) 100 times and store the results in a list.'''
+trials_list = []
+i = 0
+while i < 100:
+    test = sampler(alignments_list, probability_list, 400)
+    trials_list.append(test)
+    i = i+1
+    
+print trials_list
+
+
+'''(8) Of those 100 trials, summarize how often you saw particular proportions of type 1 vs. type 2.''' 
 
 (9) Calculate the probabilities of the proportions you saw in (8) using the binomial probability mass function 
 (PMF) from (4).
