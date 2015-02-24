@@ -92,10 +92,49 @@ def markovSim(states, prob_matrix, steps):
 # Run a simulation of 10 steps and print the output.
 print markovSim(markovStates, trans_probs, 10)
 '''['A', 'B', 'B', 'A', 'A', 'B', 'B', 'B', 'A', 'B', 'B']'''
+
 # ----> Try to finish the above lines before Tues, Feb. 10th <----
 # Now try running 100 simulations of 100 steps each. How often does the chain
 # end in each state? How does this change as you change the transition matrix?
+countA = 0
+countT = 0
+countC = 0
+countG = 0
+i = 0
+while i < 100:
+    sim_chain = markovSim(nucleotides, nucl_transition, 100)    
+    if sim_chain[-1] == 'A':
+        countA += 1
+    elif sim_chain[-1] == 'T':
+        countT += 1
+    elif sim_chain[-1] == 'C':
+        countC += 1
+    else:
+        countG += 1
+    i += 1
+    
+#print 'The simulated Markov chains end in A in about:', countA, 'times.'
+#print 'The simulated Markov chains end in B in about:', countB, 'times.'
+'''The simulated Markov chains end in A in about: 38 times.
+The simulated Markov chains end in B in about: 62 times.'''    
 # Try defining a state space for nucleotides: A, C, G, and T. Now define a
 # transition matrix with equal probabilities of change between states.
+nucleotides = ['T', 'A', 'C', 'G']
+nucl_transition = [[.5, .125, .25, .125],
+                   [.125, .5, .125, .25],
+                   [.25, .125, .5, .125],
+                   [.125, .25, .125, .5]]
 # Again, run 100 simulations of 100 steps and look at the ending states. Then
 # try changing the transition matrix.
+print 'A: ', countA, 'C: ', countC, 'T: ', countT, 'G: ', countG                  
+'''A:  23 C:  29 T:  23 G:  25, for transition probs equal:
+nucl_transition = [[.25, .25, .25, .25],
+                   [.25, .25, .25, .25],
+                   [.25, .25, .25, .25],
+                   [.25, .25, .25, .25]]'''
+'''A:  47 C:  13 T:  25 G:  15 for transition probs :
+nucl_transition = [[.5, .125, .25, .125],
+                   [.125, .5, .125, .25],
+                   [.25, .125, .5, .125],
+                   [.125, .25, .125, .5]]'''
+            
