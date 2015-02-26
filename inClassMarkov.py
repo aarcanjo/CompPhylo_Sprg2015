@@ -101,7 +101,7 @@ pRevChainF2 = (freqB*revMat[1][1]*revMat[1][0])+(freqB*revMat[1][0]*revMat[0][0]
 print pRevChainF2
 
 pRevChainR2 = (freqA*revMat[0][1]*revMat[1][1]) + (freqA*revMat[0][0]*revMat[0][1])
-print pRevChainR2"""
+print pRevChainR2
 
 # What is (roughly) true about these probabilities?
 '''They are roughly the same (forward and reverse) no matter if you know or not 
