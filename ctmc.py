@@ -86,20 +86,72 @@ class Ctmc(object):
 
             
     def simulate(self):
-    
-        if Q is None:
-            Q = gtrQ(steady_freqs, R_vector)
-    # Draw a starting state from the equilibrium frequencies.
-    
-    # Draw a waiting time from the appropriate exponential distribution.
-    
-    # Draw a new state from the marginal probabilities associated with the 
-    # current state.
+        '''This method simulates a Continuous-time Markov Chain with for the
+        newly created Ctmc object. It takes as input the object and the
+        attributes (such as branch-length, Q-matrix, state-space,
+        and number of simulations) that characterize the chain.'''
 
-    # Keep drawing waiting times and new states until the total time exceeds 
-    # the branch length.
-        return None
+        # Defining the variables that will be used in the function
+        st_space = self.st_space
+        Q = self.Q
+        steady_freqs = self.steady_freqs
+        v = self.v
+        chain_hist = []  # creates and empty list to store the change history
+        wait_time = self.wait_time
+        marg_probs = self.marg_probs
 
+        # Draw a starting state from the equilibrium frequencies.
+        currStat = discSamp(st_space, steady_freqs)
+        chain_hist.append(currStat)
+
+        # Keep drawing waiting times and new states until the total time
+        # exceeds the branch length.
+        '''I just realized that this while statement is not working as it
+        should. It keeps drawing a new state when the totalTime exceeds the
+        condition, and I'm not sure why this is happening. I've tried using it
+        outside the function (console) too and it is still not working:
+            teste = Ctmc(v=1.0)
+
+            teste.v
+            Out[302]: 1.0
+
+            teste.Q
+            Out[303]:
+        [[-1.0, 0.3333333333333333, 0.3333333333333333, 0.3333333333333333],
+         [0.3333333333333333, -1.0, 0.3333333333333333, 0.3333333333333333],
+         [0.3333333333333333, 0.3333333333333333, -1.0, 0.3333333333333333],
+         [0.3333333333333333, 0.3333333333333333, 0.3333333333333333, -1.0]]
+
+            teste.chain_hist
+            Out[304]: ['G', 'T']
+
+            teste.wait_time
+            Out[305]: [1.1367266685758093]'''
+        while sum(wait_time) < v:
+            i = st_space.index(currStat)
+
+            # Draw a waiting time from the appropriate exponential
+            # distribution and appends it to the waiting times list created
+            newTime = -1 * random.expovariate(Q[i][i])
+            wait_time.append(newTime)
+
+            # Creates two temporary lists to hold the values of the
+            # marginal probabilities and the new state space after the
+            # drawing of the last state space.
+            marg_probs, new_states = [], []
+            marg_probs.extend(Q[i])
+            marg_probs.remove(marg_probs[i])
+            new_states.extend(st_space)
+            new_states.remove(new_states[i])
+
+            # Draw a new state from the marginal probabilities associated with
+            # the current state and appends it to the chain history list
+            if sum(wait_time) <= v:
+                currStat = discSamp(new_states, marg_probs)
+                chain_hist.append(currStat)
+            else:
+                return None
+        return wait_time, chain_hist
 def estBrl(self,currBrl,diff,thresh):
     
     # Calculate the starting likelihood for currBrl. Multiply likelihoods from
